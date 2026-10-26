@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-probio-dark: #071426;
+  --color-probio-card: #0B1F38;
+  --color-probio-surface: #0f2746;
+  --color-probio-border: rgba(53, 224, 242, 0.15);
+  --color-probio-cyan: #35E0F2;
+  --color-probio-mint: #62F5B0;
+  --color-probio-text: #F4F8FF;
+  --color-probio-muted: #A8B7CA;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: #071426;
+  color: #F4F8FF;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(11, 31, 56, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(53, 224, 242, 0.14);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  border-color: rgba(53, 224, 242, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(53, 224, 242, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #071426;
+}
+::-webkit-scrollbar-thumb {
+  background: #193557;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #35E0F2;
+}
