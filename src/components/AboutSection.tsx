@@ -1,11 +1,24 @@
-import React from 'react';
-import { BookOpen, Eye, ClipboardCheck, MessageCircleQuestion, Target, Award, Compass, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  BookOpen, 
+  Eye, 
+  ClipboardCheck, 
+  MessageCircleQuestion, 
+  Compass, 
+  Sparkles, 
+  Maximize2, 
+  X,
+  Users,
+  CheckCircle2 
+} from 'lucide-react';
 
 interface AboutSectionProps {
   onOpenBooking: () => void;
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenBooking }) => {
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+
   const pillars = [
     {
       title: 'NCERT-Focused Learning',
@@ -106,21 +119,39 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenBooking }) => 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Real Batch Photo */}
             <div className="lg:col-span-6 relative">
-              <div className="relative rounded-2xl overflow-hidden border border-cyan-400/30 shadow-2xl group">
+              <div 
+                className="relative rounded-2xl overflow-hidden border border-cyan-400/30 shadow-2xl group cursor-pointer"
+                onClick={() => setIsPhotoModalOpen(true)}
+                title="Click to view full photo"
+              >
                 <img
-                  src="/public/assets/aistudio/image_48a471f3.png"
+                  src="/public/assets/aistudio/image_5fdb21bd.png"
                   alt="ProBio Academy classroom batch session with Shubhajit Sir and NEET students in Baranagar Kolkata"
                   className="w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-500"
                   loading="lazy"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+                
+                {/* Expand overlay icon */}
+                <div className="absolute top-3 right-3 p-2 rounded-lg bg-[#071426]/80 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity border border-cyan-400/30">
+                  <Maximize2 className="w-4 h-4" />
+                </div>
+
                 <div className="absolute bottom-4 left-4 right-4 text-xs text-white">
-                  <div className="font-semibold text-cyan-300">ProBio Academy Classroom Batch</div>
-                  <div className="text-slate-200 text-[11px]">
-                    Interactive Biology session & student mentorship with Shubhajit Sir at Bonhoogly, Baranagar
+                  <div className="font-semibold text-cyan-300 flex items-center gap-1.5">
+                    <Users className="w-4 h-4 text-emerald-400" />
+                    <span>ProBio Academy Classroom Batch & Mentorship</span>
+                  </div>
+                  <div className="text-slate-200 text-[11px] mt-0.5">
+                    Biology students and Shubhajit Sir at Bonhoogly, Baranagar center
                   </div>
                 </div>
+              </div>
+              <div className="mt-2 text-center">
+                <span className="text-[11px] text-cyan-400/80 hover:text-cyan-300 cursor-pointer inline-flex items-center gap-1" onClick={() => setIsPhotoModalOpen(true)}>
+                  <Maximize2 className="w-3 h-3" /> Click image to expand view
+                </span>
               </div>
             </div>
 
@@ -167,6 +198,58 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenBooking }) => 
           </div>
         </div>
       </div>
+
+      {/* Lightbox / Expanded Photo Modal */}
+      {isPhotoModalOpen && (
+        <div 
+          role="dialog" 
+          aria-modal="true" 
+          aria-label="ProBio Academy Classroom Photo"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+          onClick={() => setIsPhotoModalOpen(false)}
+        >
+          <div 
+            className="relative max-w-4xl w-full bg-[#0B1F38] border border-cyan-500/30 rounded-3xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setIsPhotoModalOpen(false)}
+              className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-black/60 text-white hover:text-cyan-400 transition-colors"
+              aria-label="Close photo preview"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <img
+              src="/public/assets/aistudio/image_5fdb21bd.png"
+              alt="ProBio Academy Classroom Batch in Baranagar Kolkata"
+              className="w-full h-auto max-h-[75vh] object-contain bg-[#071426]"
+            />
+
+            <div className="p-5 sm:p-6 bg-[#071426] border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h4 className="font-display font-bold text-white text-base sm:text-lg">
+                  ProBio Academy Classroom Batch — Shubhajit Sir
+                </h4>
+                <p className="text-xs text-slate-300 mt-1">
+                  9/1, Bireswar Dhole Lane, Bonhoogly, Baranagar, Kolkata 700035
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsPhotoModalOpen(false);
+                  onOpenBooking();
+                }}
+                className="px-5 py-2.5 rounded-xl text-xs font-semibold text-[#071426] bg-[#35E0F2] hover:bg-[#62F5B0] transition-colors self-start sm:self-auto cursor-pointer"
+              >
+                Book a Seat in This Batch
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
